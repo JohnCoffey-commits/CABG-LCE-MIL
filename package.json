@@ -1,0 +1,20 @@
+{
+  "name": "medic-ad-research-briefing",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host localhost --port 5173 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --host localhost --port 5173 --strictPort"
+  },
+  "dependencies": {
+    "katex": "0.18.7",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "6.1.1",
+    "vite": "8.2.2"
+  }
+}

@@ -1,0 +1,342 @@
+{
+  "evidenceDate": "2026-09-08",
+  "nodes": [
+    {
+      "id": "fb-maq",
+      "title": "FB-MAQ",
+      "subtitle": "Fixed-budget multiscale fusion",
+      "tone": "red",
+      "status": "Stopped",
+      "kind": "Executed internal effect & reliability pilot",
+      "short": "The implementation worked. The internal pilot did not support scaling it.",
+      "button": "13-run pilot",
+      "idea": "Fuse 4×4 fine queries with upsampled 2×2 coarse queries, while keeping exactly 16 anomaly tokens.",
+      "test": "Training, strict save/reload and generation gates passed. A subsequent anomaly-specific pilot evaluated 6 matched B0/A3 pairs plus 1 contextual reference: 13 fresh-process runs on the same 228 images.",
+      "broke": "Mean A3−B0 Balanced Accuracy was −0.146144 (−14.61 percentage points). One A3 adapter produced 228/228 invalid answers, including 220 empty responses; its matched baseline had none. The other five A3 runs had no invalid outputs.",
+      "learned": "A trainable fusion module is not enough. Reliability and this internal pilot gave no basis to expand FB-MAQ, motivating direct supervision of anomaly evidence.",
+      "statusDetail": "Stopped — stop_scaling_fb_maq. This is a negative frozen-adapter internal pilot, not patient-independent effectiveness evidence.",
+      "note": "The separate Stage 2F-C confirmation did not reproduce the earlier collapse. The later anomaly pilot reproduced it for a particular retained adapter; this is not a claim that all FB-MAQ runs collapse. The negative mean retains the failed run.",
+      "sources": [
+        "S01",
+        "S02",
+        "S03"
+      ]
+    },
+    {
+      "id": "lad-mil",
+      "title": "Fixed-λ LAD-MIL",
+      "subtitle": "Direct image-label supervision",
+      "tone": "red",
+      "status": "Gate failed",
+      "kind": "Executed calibration / mechanism gate; no matched training",
+      "short": "Two calibration subsets exposed a 13.4× change in gradient scale.",
+      "button": "2 calibration attempts",
+      "idea": "Use normal/abnormal image labels to supervise internal anomaly evidence, with one fixed auxiliary-loss weight λ.",
+      "test": "Two independently selected step-0 calibration subsets: 4 images, then 12. Both tested prespecified weight grids against the same allowed gradient-ratio band [0.05, 0.20]. Neither selected a λ.",
+      "broke": "The unscaled evidence/LM gradient-norm ratio changed from 167.586 to 12.492, about 13.4×. Across both calibrations, all 8 abnormal observations (2 + 6) had zero squared-hinge loss, placing them in its zero-gradient region.",
+      "learned": "A wider fixed-weight search would not resolve subset-sensitive scaling or the abnormal-class dead zone. The next design needed class-active supervision and a measured gradient budget.",
+      "statusDetail": "Gate failed — the calibration contract returned PAUSE before formal matched B0-AS/LAD-MIL training. No performance-degradation result was measured.",
+      "note": "8/8 is the combined abnormal count across the two calibration sets, not eight abnormal images in the 12-image recalibration alone. These were gradient measurements with zero optimizer updates.",
+      "sources": [
+        "S04",
+        "S05"
+      ]
+    },
+    {
+      "id": "cabg-v11",
+      "title": "CABG-MIL v1.1",
+      "subtitle": "M0 → M1 → M2 diagnostics",
+      "tone": "red",
+      "status": "Gate failed",
+      "kind": "Executed same-forward mechanism diagnostic",
+      "short": "Fixing the loss restored activity. Saturation and the support definition remained.",
+      "button": "Explore M0 / M1 / M2",
+      "idea": "Separate the effects of the loss, pooling and evidence path before promoting a class-balanced gradient design.",
+      "test": "12 images, exactly 12 forwards and 36 M0/M1/M2 records. Each image's three mechanisms share the same forward graph. No optimizer, controller training or parameter update was run in Gate D3.",
+      "broke": "M0 had an abnormal-class dead zone. M1/M2 restored both-class gradients, but M2 failed the registered support and A/N saturation gates.",
+      "learned": "Measure the actual gradient path over all trainable tensors. Fixing pooling or a loss dead zone does not remove upstream sigmoid attenuation.",
+      "statusDetail": "Gate failed — D3 returned PAUSE. Partial mechanism successes remain valid; they do not turn the complete candidate into a passed method.",
+      "note": "The four VPT gradients were a real differentiable path, not corruption. The old six-tensor support assumption was incomplete. The proposed dynamic controller was not itself trained or causally validated by this diagnostic.",
+      "parts": [
+        {
+          "title": "M0 · squared hinge",
+          "tone": "red",
+          "status": "Gate failed",
+          "idea": "Sigmoid-difference evidence, hard top-1% (top-11) pooling and squared hinge.",
+          "test": "Same-forward diagnostic on 6 normal and 6 abnormal images.",
+          "broke": "6/6 abnormal samples had zero auxiliary loss and gradient; their scores were already beyond the hinge margin.",
+          "learned": "The abnormal-class dead zone was confirmed on the real model, not merely suspected from aggregate gradients.",
+          "statusDetail": "Gate failed — abnormal-class gradient activity."
+        },
+        {
+          "title": "M1 · symmetric softplus",
+          "tone": "green",
+          "status": "Retained",
+          "idea": "Replace squared hinge with class-symmetric softplus while retaining hard top-11 pooling.",
+          "test": "Read-only gradients from the same 12 graphs used by M0 and M2.",
+          "broke": "Both classes became active, but hard pooling remained sparse and the two sigmoid Jacobians still attenuated gradients.",
+          "learned": "A smooth class-symmetric loss repairs activity, but does not solve the complete evidence-path problem.",
+          "statusDetail": "Retained as a diagnostic insight, not promoted as a complete method."
+        },
+        {
+          "title": "M2 · smooth MIL pooling",
+          "tone": "red",
+          "status": "Gate failed",
+          "idea": "Use normalized LogSumExp pooling and softplus within the proposed CABG gradient-budget design.",
+          "test": "All 12 same-forward observations were checked for activity, spatial support, saturation and all-trainable gradient support.",
+          "broke": "Effective spatial support was broad: 902–961/1024. Yet all 12 images had auxiliary gradients in four VPT tensors outside the registered six, and both A/N sigmoid branches exceeded the saturation threshold on 12/12 images.",
+          "learned": "Broad spatial support is possible, but the support schema and saturated probability path still need redesign.",
+          "statusDetail": "Gate failed — support definition and probability saturation. This was not a trained performance comparison."
+        }
+      ],
+      "sources": [
+        "S06",
+        "S08"
+      ]
+    },
+    {
+      "id": "design-rejections",
+      "title": "Two designs ruled out",
+      "subtitle": "Projection & temperature scaling",
+      "tone": "amber",
+      "status": "Stopped",
+      "kind": "Design-stage rejection — not executed performance trials",
+      "short": "Rejected proposals that left saturation intact or introduced unsupported tuning.",
+      "button": "Why neither was run",
+      "idea": "Consider explicit gradient projection, or temperature-scaled logit contrast, as alternative repairs.",
+      "test": "Prospective candidate review and analytical checks against the diagnosed failure modes and available calibration data. No performance experiment was run for either proposal.",
+      "broke": "Projection changes where gradients are applied but retains the two sigmoid Jacobians. Temperature scaling introduces a new choice without an independent calibration set or a uniquely justified value.",
+      "learned": "Rule out low-value or underdetermined designs before spending compute. Prefer a contrast with no new temperature to select.",
+      "statusDetail": "Stopped at design review — neither entry is an observed performance failure.",
+      "parts": [
+        {
+          "title": "Projected-Support Auxiliary Update",
+          "tone": "amber",
+          "status": "Stopped",
+          "idea": "Explicitly project auxiliary gradients onto a chosen update support.",
+          "test": "Review the applied-gradient semantics and derivative path. No matched training was executed.",
+          "broke": "Projection would fix update scope, but would not bypass saturated sigmoid Jacobians.",
+          "learned": "Support semantics and gradient attenuation are separate problems; projection alone cannot be the primary repair.",
+          "statusDetail": "Stopped as a primary candidate at design review; retained only as a possible support-semantics ablation."
+        },
+        {
+          "title": "Temperature-scaled contrast",
+          "tone": "amber",
+          "status": "Stopped",
+          "idea": "Consider tanh((A−N)/(2T)) to change contrast sensitivity.",
+          "test": "Pre-experiment design review of the required temperature and its selection data.",
+          "broke": "No independent calibration set or unique theoretical T was available; tuning on the old diagnostic images would add selection freedom.",
+          "learned": "Avoid creating another unbounded parameter search. Softsign provides a contrast without an added temperature.",
+          "statusDetail": "Stopped before a performance experiment; not an executed ablation."
+        }
+      ],
+      "sources": [
+        "S07",
+        "S08"
+      ]
+    },
+    {
+      "id": "lce-v12",
+      "title": "CABG-LCE-MIL v1.2",
+      "subtitle": "Softsign logit-contrast",
+      "tone": "blue",
+      "status": "Retained",
+      "kind": "Passed mechanism gates; development candidate",
+      "short": "A working mechanism emerged. Full training then exposed late concentration.",
+      "button": "From diagnosis to v1.2",
+      "idea": "Use softsign(A−N) instead of sigmoid(A)−sigmoid(N) in the auxiliary objective, with FP32 subtraction, smooth MIL pooling and the measured S9 gradient support.",
+      "test": "Read-only R0 diagnostics followed by the separate 24-image D3R mechanism gate, a training-feasibility pilot, and complete 24-block development trajectories.",
+      "broke": "Mechanism activity and support checks passed, but full training exposed late spatial concentration in some trajectories. Softsign still attenuates at extreme gaps; it is not a universal stability guarantee.",
+      "learned": "Correct local gradients do not guarantee benign accumulated training behavior. The next experiments had to test LCE exposure over the trajectory.",
+      "statusDetail": "Retained as the v1.2 primary method for internal investigation. Development score gains do not establish independent capability or clinical effectiveness.",
+      "note": "Only the auxiliary evidence map changes. Official inference still uses its original sigmoid-difference pathway. No new contrast temperature is added; normalized MIL pooling retains the fixed τ = 1/log(1024). Later corrected experiments show concentration is initialization-sensitive, not inevitable.",
+      "sources": [
+        "S08",
+        "S09",
+        "S15"
+      ]
+    },
+    {
+      "id": "stability-repairs",
+      "title": "Three stability repairs",
+      "subtitle": "Taper → guard → moment reset",
+      "tone": "red",
+      "status": "Gate failed",
+      "kind": "Executed development training interventions",
+      "short": "Ranking gains survived. None of the three repairs passed the spatial gate.",
+      "button": "Compare all 3 repairs",
+      "idea": "Reduce late LCE exposure, react to concentration during training, and then test a one-time optimizer-memory reset.",
+      "test": "Two preregistered full 24-block repairs plus one allowed full 24-block adjustment, all evaluated at the fixed endpoint with the same 32 development images.",
+      "broke": "Support medians were 105.5 (taper), 153.1 (guard) and 153.1 (guard + reset), below the locked 256 floor. Tail rules also remained unsatisfied. All three retained the original development ranking gain.",
+      "learned": "Descriptive improvement is not a passed gate. A late guard and first-moment reset were insufficient in these runs; the intervention state and timing required a controlled comparison.",
+      "statusDetail": "Gate failed — all three received outcome C: development benefit retained, spatial concentration unresolved.",
+      "note": "A separate evaluator bookkeeping issue was repaired without rerunning the two original GPU producers. That engineering issue is not counted as a scientific failure. The moment-reset result is local; it does not rule out every role for optimizer state.",
+      "parts": [
+        {
+          "title": "Cosine taper",
+          "tone": "red",
+          "status": "Gate failed",
+          "idea": "Gradually reduce the LCE multiplier after block 12 using the registered cosine taper.",
+          "test": "Complete 24-block training, own midpoint restore and fixed development evaluation.",
+          "broke": "Support median 105.5; 17/32 below 128 and 20/32 above the top-11 mass threshold. Spatial stability failed despite AUROC 0.9792 and AP 0.9892.",
+          "learned": "Gradually lowering the weight was not enough to solve late concentration under this schedule.",
+          "statusDetail": "Gate failed — outcome C; development ranking benefit retained."
+        },
+        {
+          "title": "Training-side spatial guard",
+          "tone": "red",
+          "status": "Gate failed",
+          "idea": "Use training-side effective support and top-11 concentration to reduce or switch off LCE.",
+          "test": "Preregistered warning/latch policy, full training and fixed endpoint; no development-driven online decisions.",
+          "broke": "Support improved to 153.1, but remained below 256; low-support and high-top-11 counts were 13/32 and 11/32, above the allowed 8.",
+          "learned": "The guard improved the description of the endpoint but did not meet the prospective spatial criteria.",
+          "statusDetail": "Gate failed — descriptive improvement, not a validated stability repair."
+        },
+        {
+          "title": "Guard + AdamW first-moment reset",
+          "tone": "red",
+          "status": "Gate failed",
+          "idea": "At the registered guard latch, reset S9 exp_avg once while preserving second moments, steps and other state.",
+          "test": "One allowed new 24-block trajectory; exact nine-tensor reset and state preservation independently checked.",
+          "broke": "Final support median stayed 153.1; AUROC/AP matched the guard at 0.9833/0.9917. Tail counts shifted but still failed the gate.",
+          "learned": "No material extra endpoint benefit was found. This test did not justify a moment reset as a required repair.",
+          "statusDetail": "Gate failed — no sufficient improvement in this registered adjustment."
+        }
+      ],
+      "sources": [
+        "S10"
+      ]
+    },
+    {
+      "id": "causal-branch",
+      "title": "Shared-parent LCE-off",
+      "subtitle": "The useful counterfactual",
+      "tone": "green",
+      "status": "Retained",
+      "kind": "Executed local causal mechanism comparison",
+      "short": "From the same checkpoint, stopping future LCE prevented concentration.",
+      "button": "What the branch established",
+      "idea": "Fork the same original block-12 checkpoint and remove only future applied LCE, keeping inherited optimizer state.",
+      "test": "Matched blocks 13–24 from one parent: continued CABG, LCE-off with state kept, and LCE-off with S9 first moments reset. The unchanged control had to reproduce concentration.",
+      "broke": "The control became concentrated (support median 43.4). State-kept LCE-off remained stable (420.6) and retained parent AUROC/AP at 0.9917/0.9955. The simple hypothesis that inherited first moments alone were sufficient did not hold here.",
+      "learned": "Continued applied LCE contributes to forming concentration from this specific parent. A first-moment reset was not necessary for the state-kept branch to pass.",
+      "statusDetail": "Retained — a useful local causal insight, not a failed method and not general proof of controller necessity.",
+      "note": "This historical parent was spatially stable, so this comparison tested prevention. A later corrected-runtime study used an already concentrated parent and supported reversal. Keep the two parents and execution identities separate; the conclusion remains conditional on state, horizon and reused development data.",
+      "sources": [
+        "S11",
+        "S16"
+      ]
+    },
+    {
+      "id": "early-only",
+      "title": "Fixed-cutoff / early-only",
+      "subtitle": "Reproducibility before a new claim",
+      "tone": "blue",
+      "status": "Retained",
+      "kind": "Initially inconclusive; development candidate; external validation blocked",
+      "short": "Corrected comparisons support an internal candidate. External benefit is still unknown.",
+      "button": "Inconclusive → internal support",
+      "secondaryStatus": "Independent validation blocked",
+      "idea": "Test a fixed block-12 cutoff from initialization rather than selecting a successful historical checkpoint.",
+      "test": "First, fresh 24-block cutoff/control runs. Then diagnose backward nondeterminism, verify corrected complete trajectories and compare frozen none/early/late/full histories at two retained starts.",
+      "broke": "The first control did not reproduce severe concentration; the nominally identical prefixes diverged before the cutoff. That comparison remains INCONCLUSIVE. Later internal support does not supply an independent cohort.",
+      "learned": "Fix comparability before attributing an effect. Under corrected execution, early-only is a useful development-selected candidate, but full remains the primary comparator and external answer benefit is unmeasured.",
+      "statusDetail": "Retained as an internal secondary candidate. Original comparison: Inconclusive. Current independent validation: BLOCKED_INDEPENDENT_COHORT_READINESS.",
+      "note": "Early-only AUROC was 0.9875 and 0.9625 at starts 43/44; full was 0.9917 and 0.9708. These reuse the same 32 development images. They establish neither generalization, an optimal cutoff, nor equivalence between early and full. No qualified external MRI cohort was admitted.",
+      "sources": [
+        "S12",
+        "S13",
+        "S14",
+        "S15",
+        "S17"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Stage 2F — FB-MAQ engineering gate",
+      "section": "§§2–4: fixed token budget, implementation and engineering checks"
+    },
+    {
+      "id": "S02",
+      "title": "Stage 2F-C — confirmation and diagnosis",
+      "section": "§§3–5: confirmation pair and collapse not reproduced"
+    },
+    {
+      "id": "S03",
+      "title": "Stage 2G — anomaly-specific internal pilot",
+      "section": "§§1, 5–6: 13-run aggregate, reliability and independent recomputation"
+    },
+    {
+      "id": "S04",
+      "title": "Stage 2H — LAD-MIL v2 engineering gate",
+      "section": "§§1, 6–7: first calibration and PAUSE before matched training"
+    },
+    {
+      "id": "S05",
+      "title": "Stage 2H v2.2 — lambda recalibration",
+      "section": "§§1, 4, 6: independent subset and scale sensitivity; retained microbatch records"
+    },
+    {
+      "id": "S06",
+      "title": "CABG-MIL v1.1 — Gate D3",
+      "section": "§§3–7: same-forward M0/M1/M2, support and saturation gates"
+    },
+    {
+      "id": "S07",
+      "title": "R1 — candidate pre-analysis",
+      "section": "Projected-support limitation and locked primary selection logic"
+    },
+    {
+      "id": "S08",
+      "title": "CABG-MIL v1.2 — redesign protocol",
+      "section": "§§2, 7, 10–15: accepted R0 evidence, design rejections and exact method"
+    },
+    {
+      "id": "S09",
+      "title": "D3R — independent completion audit",
+      "section": "PASS_D3R: mechanism validation, not effectiveness"
+    },
+    {
+      "id": "S10",
+      "title": "D4-Scout — stability repair completion audit",
+      "section": "All three fixed endpoints and accepted independent final verification"
+    },
+    {
+      "id": "S11",
+      "title": "D4-Scout — shared-checkpoint causal continuation",
+      "section": "Accepted state-kept and reset branches, control and scope"
+    },
+    {
+      "id": "S12",
+      "title": "Fixed-cutoff end-to-end validation",
+      "section": "INCONCLUSIVE: failed control reproduction and prefix attribution limit"
+    },
+    {
+      "id": "S13",
+      "title": "Route A — VPT backward and controller propagation",
+      "section": "Scoped deterministic correction and first-four-block READY_EXACT"
+    },
+    {
+      "id": "S14",
+      "title": "Corrected original CABG full24",
+      "section": "Paired full trajectories and fresh-process recovery verification"
+    },
+    {
+      "id": "S15",
+      "title": "Complete late-only timing comparison",
+      "section": "Accepted eight endpoints and exact none/early/late/full ranking table"
+    },
+    {
+      "id": "S16",
+      "title": "Controller / continued LCE persistence",
+      "section": "Corrected-runtime three-arm comparison from an already concentrated parent"
+    },
+    {
+      "id": "S17",
+      "title": "Stage 2ad — external cohort readiness completion",
+      "section": "Independent capability NOT MEASURED; candidate and baseline freeze"
+    }
+  ]
+}
