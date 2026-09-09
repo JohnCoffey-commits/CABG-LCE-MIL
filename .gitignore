@@ -8,6 +8,9 @@ dist/
 *.log
 .DS_Store
 
+# Locally maintained supervisor briefing; deployed independently from this repository.
+/website/
+
 __pycache__/
 *.py[cod]
 .pytest_cache/

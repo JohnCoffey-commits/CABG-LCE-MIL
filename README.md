@@ -1,13 +1,12 @@
 # CABG-LCE-MIL
 
-Research code and supervisor briefing for **CABG-LCE-MIL v1.2**, developed as a University of Technology Sydney Master of IT Research Project on top of [MEDIC-AD](https://github.com/AIDASLab/Medic-AD).
+Research code for **CABG-LCE-MIL v1.2**, developed as a University of Technology Sydney Master of IT Research Project on top of [MEDIC-AD](https://github.com/AIDASLab/Medic-AD).
 
 CABG-LCE-MIL adds image-level supervision to the model's normal-versus-abnormal evidence during training. It combines a temperature-free logit contrast, smooth multiple-instance pooling and a gradient-budget controller while leaving the original answer-generation path unchanged at inference time.
 
-## Repository layout
+## Source release
 
 - `research-code/` — the complete committed source contribution relative to the pinned MEDIC-AD base, including model integration, training code, controlled experiments, CPU tests and independent verifiers.
-- `website/` — the React/Vite supervisor briefing deployed at https://medic-ad-briefing.vercel.app/.
 
 The research export is a source release rather than an artifact archive. It excludes MRI data, patient/case manifests, protected-test material, checkpoints, optimizer state, model weights, raw execution traces and infrastructure credentials.
 
@@ -36,15 +35,9 @@ The codebase supports a substantial internal result: the corrected execution con
 
 These results do **not** establish patient-independent capability or clinical validity. The latest formal project state is `BLOCKED_INDEPENDENT_COHORT_READINESS`: no qualifying independent same-task cohort met the locked access, grouping, source-isolation, two-dimensional truth, rendering and precision requirements. Development-set score gains therefore remain internal evidence.
 
-## Website
+## Project briefing
 
-```sh
-cd website
-npm ci
-npm run dev
-```
-
-The Vercel project uses `website/` as its root directory. The site contains only reviewed aggregate figures and case-free presentation data.
+The supervisor-facing research summary is available at [medic-ad-briefing.vercel.app](https://medic-ad-briefing.vercel.app/). It is hosted independently; its website source is not distributed in this repository.
 
 ## Attribution and reuse
 
