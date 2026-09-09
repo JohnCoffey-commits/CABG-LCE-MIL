@@ -8,13 +8,7 @@ export default function App() {
   return <>
     <a className="skip-link" href="#paper">Skip to content</a>
     <div className="page">
-      <header className="site-header">
-        <a className="site-name" href="#paper"><strong>CABG-LCE-MIL</strong><span>A research project built on MEDIC-AD</span></a>
-        <nav aria-label="Primary navigation">
-          <a className="github-link" href="https://github.com/JohnCoffey-commits/CABG-LCE-MIL" target="_blank" rel="noreferrer" aria-label="View the CABG-LCE-MIL source code on GitHub">GitHub <span aria-hidden="true">↗</span></a>
-          <a href="#paper">Background</a><a href="#idea">My idea</a><a href="#evolution">Process</a><a href="#results">Results</a><a href="#conclusion">Conclusion</a>
-        </nav>
-      </header>
+      <header className="site-header"><a className="site-name" href="#paper"><strong>CABG-LCE-MIL</strong><span>A research project built on MEDIC-AD</span></a><nav aria-label="Sections"><a href="#paper">Background</a><a href="#idea">My idea</a><a href="#evolution">Process</a><a href="#results">Results</a><a href="#conclusion">Conclusion</a></nav></header>
       <main>
         <section id="paper" className="paper-section" aria-labelledby="paper-heading">
           <p className="project-meta">UTS Master of IT · 6-credit Research Project · v1.2</p>

@@ -32,12 +32,9 @@ code { font-family: 'SFMono-Regular', Consolas, monospace; font-size: .88em; ove
 .site-name { color: #20272e; text-decoration: none; line-height: 1.4; }
 .site-name strong { display: block; font-size: 23px; letter-spacing: -.03em; }
 .site-name span { font-size: 14px; color: var(--muted); }
-nav { display: flex; align-items: center; flex-wrap: wrap; gap: 21px; font-size: 14px; }
+nav { display: flex; gap: 21px; font-size: 14px; }
 nav a { color: #30363c; text-decoration: none; white-space: nowrap; }
 nav a:hover { text-decoration: underline; }
-nav .github-link { padding: 5px 10px; border: 1px solid #9aabba; border-radius: 3px; color: #294e73; background: #f2f6f9; font-weight: 600; line-height: 1.35; }
-nav .github-link:hover { color: #183752; background: #e8f0f6; border-color: #718ca4; text-decoration: none; }
-nav .github-link span { display: inline-block; margin-left: 2px; font-size: .9em; }
 main > section { margin-top: 48px; }
 .paper-section { margin-top: 32px; }
 .project-meta { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
@@ -242,8 +239,7 @@ footer { border-top: 1px solid var(--line); margin-top: 46px; padding: 22px 0 35
   .site-header { flex-direction: column; gap: 14px; padding: 24px 0 19px; }
   .site-name strong { font-size: 22px; }
   .site-name span { font-size: 13px; }
-  nav { width: 100%; justify-content: flex-start; gap: 9px 16px; padding: 0; font-size: 12px; }
-  nav .github-link { padding: 5px 9px; }
+  nav { width: 100%; justify-content: space-between; gap: 7px; padding: 0; font-size: 12px; }
   main > section { margin-top: 35px; }
   .paper-section { margin-top: 25px; }
   h1 { font-size: 27px; margin-bottom: 23px; }
