@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "claim_scope": "development_only_training_feasibility",
+  "reviewed_implementation_commit": "33ebf67db2f3f7fb97afa0cc768297ca8f26b4eb",
+  "d3r_verification_sha256": "bccadb80b03c9f87da92aeb9a80f3333b52ef8ee5d8afab09b7fdf86bbcbada2",
+  "d4_packet_sha256": "19323662f94da28f31d459fea12e10579fe6ae92dace3cbb4a588930d3f2694f",
+  "locked_pilot_manifest_sha256": "b3edf80271a37436c8c43583053a2be6d2d42019a43d5e4d50ba767e353ba233",
+  "unit_tests_sha256": "42c52206a300af1a00432c5e469520cd6a1da60bb13a80c58eb359e9ae845d0d",
+  "packet_verification_sha256": "3ba901c7033e50bc29c9a0a11edb8f0b78fb28f65a7ce90d49c938e2e397ef4f",
+  "quarantined_v1_audit_sha256": "9e56c4b993611c5a345f33eae18161842fc10bcfbdd2dba4307e407870a63166",
+  "review_sha256": {
+    "spec": "5fa6e123d9ccce8815d413c67de5c0e73dee6b5a337e81a17c7623b19b1e450a",
+    "quality": "277af8d0e8c8569d2d1aa71fbbcb2c65a2fc3d33e30d1d577a136b0f80dd19dc",
+    "independent_verification": "87851474bdf7689ded69afcfc02395742497fed8e87a4b72c9063b9ad35704ae"
+  },
+  "gates": {
+    "spec_review": "PASS",
+    "quality_review": "PASS",
+    "unit_tests": "PASS",
+    "data_isolation": "PASS",
+    "source_model_identity": "PASS",
+    "independent_verification": "PASS"
+  },
+  "execution_authorized": true,
+  "authorization_limit": "one_four_block_twelve_image_development_only_feasibility_pilot"
+}

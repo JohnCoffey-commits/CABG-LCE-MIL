@@ -1,0 +1,16 @@
+[
+  {
+    "id": "headct_abnormal_000_overfit_diagnostic",
+    "image": "headct_abnormal_000.png",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\nIs there any anomaly in the image?\nAnswer the question using a single word or phrase."
+      },
+      {
+        "from": "gpt",
+        "value": "Yes"
+      }
+    ]
+  }
+]

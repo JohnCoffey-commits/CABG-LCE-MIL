@@ -1,0 +1,58 @@
+[
+  {
+    "id": "brain_mri_normal_10",
+    "image": "brain_mri_normal_10.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\nIs there any anomaly in the image?\nAnswer the question using a single word or phrase."
+      },
+      {
+        "from": "gpt",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "id": "brain_mri_abnormal_y1",
+    "image": "brain_mri_abnormal_y1.jpg",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\nIs there any anomaly in the image?\nAnswer the question using a single word or phrase."
+      },
+      {
+        "from": "gpt",
+        "value": "Yes"
+      }
+    ]
+  },
+  {
+    "id": "headct_normal_100",
+    "image": "headct_normal_100.png",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\nIs there any anomaly in the image?\nAnswer the question using a single word or phrase."
+      },
+      {
+        "from": "gpt",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "id": "headct_abnormal_000",
+    "image": "headct_abnormal_000.png",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\nIs there any anomaly in the image?\nAnswer the question using a single word or phrase."
+      },
+      {
+        "from": "gpt",
+        "value": "Yes"
+      }
+    ]
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "claim_scope": "confirmatory_read_only_mechanism_diagnostic_only",
+  "d4_authorized": false,
+  "dataset_isolation": "PASS",
+  "independent_verification": "PASS",
+  "manifest_sha256": "7e581453de5f4abba2eafa87b982eccb751264f66e86ac10f3b92a160ae20db1",
+  "protected_internal_test_evaluation_authorized": false,
+  "quality_review": "PASS",
+  "reviewed_source_commit": "51289955e29b9d0b54420c22566b27f169e8bf4e",
+  "spec_review": "PASS",
+  "status": "PASS",
+  "test_artifact_sha256": "880e4d9d2a406390eea0fee656877110ad22d2c5dacf5dd3236410b0a8322b6e",
+  "tests": "PASS",
+  "training_authorized": false
+}

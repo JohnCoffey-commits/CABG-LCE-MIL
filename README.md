@@ -1,51 +1,53 @@
-# CABG-LCE-MIL research briefing
+# CABG-LCE-MIL
 
-A compact academic website for presenting the development of **CABG-LCE-MIL v1.2**, a training objective investigated on top of MEDIC-AD. It explains the research question, mechanism, controlled failures, retained evidence, limitations and research effort.
+Research code and supervisor briefing for **CABG-LCE-MIL v1.2**, developed as a University of Technology Sydney Master of IT Research Project on top of [MEDIC-AD](https://github.com/AIDASLab/Medic-AD).
 
-**Live website:** https://medic-ad-briefing.vercel.app/
+CABG-LCE-MIL adds image-level supervision to the model's normal-versus-abnormal evidence during training. It combines a temperature-free logit contrast, smooth multiple-instance pooling and a gradient-budget controller while leaving the original answer-generation path unchanged at inference time.
 
-The briefing is designed for a short supervisor presentation. Scientific claims are deliberately bounded: the reported capability results are internal development-set evidence, while independent-cohort capability remains unmeasured because a qualifying cohort has not been established.
+## Repository layout
 
-## Run locally
+- `research-code/` — the complete committed source contribution relative to the pinned MEDIC-AD base, including model integration, training code, controlled experiments, CPU tests and independent verifiers.
+- `website/` — the React/Vite supervisor briefing deployed at https://medic-ad-briefing.vercel.app/.
 
-Requirements: Node.js 22 or newer.
+The research export is a source release rather than an artifact archive. It excludes MRI data, patient/case manifests, protected-test material, checkpoints, optimizer state, model weights, raw execution traces and infrastructure credentials.
+
+## Reconstruct the research source tree
+
+The public source release is pinned to:
+
+- upstream MEDIC-AD base: `ad62e7c910f4febad7b07030bd1c11796ae064e7`
+- accepted project source: `cb5a33ca4d6d976d5f736f3f0a3217fdb5e47b2f`
+
+Clone the upstream repository at the pinned base and apply the source overlay:
 
 ```sh
+git clone https://github.com/AIDASLab/Medic-AD.git medic-ad
+git -C medic-ad checkout ad62e7c910f4febad7b07030bd1c11796ae064e7
+./research-code/scripts/apply-overlay.sh medic-ad
+```
+
+Alternatively, apply `research-code/patches/cabg-lce-mil-source.patch` to a clean checkout of the same upstream commit.
+
+The environment snapshot used by the project is under `research-code/environment/`. Model weights and datasets must be obtained separately from their original providers and used under their own access terms.
+
+## Evidence boundary
+
+The codebase supports a substantial internal result: the corrected execution configuration reproduced two full 24-step trajectories, recovery checks and matched development-set comparisons. It also provides local causal evidence that continuing LCE after a shared checkpoint participates in maintaining late spatial concentration under the tested conditions.
+
+These results do **not** establish patient-independent capability or clinical validity. The latest formal project state is `BLOCKED_INDEPENDENT_COHORT_READINESS`: no qualifying independent same-task cohort met the locked access, grouping, source-isolation, two-dimensional truth, rendering and precision requirements. Development-set score gains therefore remain internal evidence.
+
+## Website
+
+```sh
+cd website
 npm ci
 npm run dev
 ```
 
-Open http://localhost:5173/. To test the production build:
+The Vercel project uses `website/` as its root directory. The site contains only reviewed aggregate figures and case-free presentation data.
 
-```sh
-npm run build
-npm run preview
-```
+## Attribution and reuse
 
-## Repository contents
+MEDIC-AD is the upstream work by Park et al. and remains subject to its authors' terms. Individual inherited source files retain their existing copyright and licence notices. Third-party Python and JavaScript dependencies retain their respective licences.
 
-- `src/App.jsx` — paper context, research question and conclusions.
-- `src/Workflow.jsx` — interactive original-path and training-objective diagram.
-- `src/Math.jsx` — accessible equations rendered with bundled KaTeX.
-- `src/Evolution.jsx` — eight clickable research-evolution cards.
-- `src/Results.jsx` — result figures, metric switcher and numerical table.
-- `src/Resources.jsx` — research effort and compute resources.
-- `src/data/` — reviewed, case-free presentation content.
-- `public/figures/` — static research figures used by the website.
-- `public/data/` — aggregate CSV downloads without patient or image identifiers.
-
-This repository contains the briefing website source and reviewed aggregate presentation assets. It does not contain the MEDIC-AD research repository, MRI data, case manifests, protected-test material, model checkpoints, optimizer state, raw experiment artifacts, credentials or private infrastructure paths.
-
-## Interaction and accessibility
-
-The workflow can be presented in four controlled steps and does not auto-loop. Every evolution card opens a detailed evidence view using keyboard-accessible controls. The site includes responsive layouts, print rules and reduced-motion behaviour. KaTeX fonts and mathematical rendering are bundled locally; there is no runtime analytics or external data service.
-
-## Deployment
-
-The project is built by Vercel from `main` using `npm ci` and `npm run build`; the static output is `dist/`. Pushes to `main` update the production deployment, while pull requests can receive preview deployments through Vercel's Git integration.
-
-## Research attribution
-
-The starting point is [MEDIC-AD (Park et al., 2026)](https://arxiv.org/abs/2603.27176v2). CABG-LCE-MIL v1.2 and the evidence synthesis shown here were developed as a University of Technology Sydney Master of IT Research Project. Original and modified mechanisms are distinguished throughout the briefing.
-
-The dependencies retain their respective upstream licences. No licence is granted here for external reuse of the research content or source beyond what applicable law permits.
+This repository does not add a blanket licence for the research contribution. Public visibility permits inspection but does not by itself grant broader reuse rights.
