@@ -1,0 +1,35 @@
+{
+  "release": "uts32933-report-20261026-v1",
+  "status": "PASS",
+  "upstream_base": "ad62e7c910f4febad7b07030bd1c11796ae064e7",
+  "patch_and_overlay_equal_files": 407,
+  "static_local_import_closure_files": 124,
+  "unresolved_local_imports": [],
+  "numerical_recomputation": {
+    "status": "PASS",
+    "scope": "separate implementation, same operator; numerical/asset verification, not new model validation",
+    "checks": {
+      "source_snapshots": 26,
+      "original_sources_available": 26,
+      "endpoint_reductions": 87,
+      "accepted_pairs": 94,
+      "expanded_bootstrap_replicates": 42,
+      "interval_rows": 27,
+      "figures": 16,
+      "local_html_links": 145
+    },
+    "max_original_endpoint_error": 9.992007221626409e-15,
+    "all_input_snapshots_hash_verified": true,
+    "new_model_calls": 0,
+    "bootstrap_check": "42 explicitly expanded resamples across all7 endpoints; quantiles checked for all27 interval rows",
+    "limitations": [
+      "No patient-level independence",
+      "No independent-laboratory replication",
+      "Post-hoc intervals; descriptive image resampling",
+      "Visual QA is recorded separately; automated format checks do not establish visual quality"
+    ]
+  },
+  "model_jobs": 0,
+  "gpu_jobs": 0,
+  "note": "Inventory/syntax, patch/overlay reconstruction and saved-results CPU recomputation only; model execution dependencies and outcomes are historical."
+}

@@ -1,0 +1,13 @@
+endpoint,seed,method,step,split,readout,inference_shuffle,n,auxiliary_auroc,first_token_margin_auroc,generated_BA,analysis_status
+s43-cabg_lce-step1000-development,43,cabg_lce,1000,development,generated answer,False,128,0.802734375,0.828369140625,0.7265625,post-hoc descriptive readout comparison
+s43-cabg_lce-step1000-final,43,cabg_lce,1000,final,generated answer,False,542,0.807727510460251,0.836934492677824,0.730419717573222,post-hoc descriptive readout comparison
+s43-fixed_lce-step1000-development,43,fixed_lce,1000,development,generated answer,False,128,0.810302734375,0.8289794921875,0.7265625,post-hoc descriptive readout comparison
+s43-fixed_lce-step1000-final,43,fixed_lce,1000,final,generated answer,False,542,0.800536087866109,0.820884544979079,0.749117416317992,post-hoc descriptive readout comparison
+s43-lm_only-step1000-development,43,lm_only,1000,development,generated answer,False,128,0.56787109375,0.8145751953125,0.7421875,post-hoc descriptive readout comparison
+s43-lm_only-step1000-final,43,lm_only,1000,final,generated answer,False,542,0.603327667364017,0.811486663179916,0.714239016736402,post-hoc descriptive readout comparison
+s44-cabg_lce-step1000-development,44,cabg_lce,1000,development,generated answer,False,128,0.806640625,0.814453125,0.7109375,post-hoc descriptive readout comparison
+s44-cabg_lce-step1000-final,44,cabg_lce,1000,final,generated answer,False,542,0.802203190376569,0.826310800209205,0.727771966527197,post-hoc descriptive readout comparison
+s44-fixed_lce-step1000-development,44,fixed_lce,1000,development,generated answer,False,128,0.798583984375,0.8050537109375,0.6953125,post-hoc descriptive readout comparison
+s44-fixed_lce-step1000-final,44,fixed_lce,1000,final,generated answer,False,542,0.803706851464435,0.83453190376569,0.732511767782427,post-hoc descriptive readout comparison
+s44-lm_only-step1000-development,44,lm_only,1000,development,generated answer,False,128,0.4417724609375,0.8094482421875,0.703125,post-hoc descriptive readout comparison
+s44-lm_only-step1000-final,44,lm_only,1000,final,generated answer,False,542,0.361859309623431,0.842115585774059,0.760133368200837,post-hoc descriptive readout comparison

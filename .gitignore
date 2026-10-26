@@ -26,3 +26,8 @@ wandb/
 *.pt
 *.pth
 *.safetensors
+
+# Course analysis source records are distributed in the local course attachment.
+/course-analysis/data/
+/course-analysis/tables/13_transport_trace_subset_posthoc.csv
+/course-analysis/tables/17_final_score_distributions.csv

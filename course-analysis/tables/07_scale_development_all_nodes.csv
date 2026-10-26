@@ -1,0 +1,26 @@
+stage,endpoint,seed,method,step,split,readout,inference_shuffle,n,negative_n,positive_n,tn,fp,fn,tp,invalid,correct,negative_recall,positive_recall,accuracy,balanced_accuracy,auroc,average_precision
+af,linear-head-development,,linear_head,,development,fixed classifier,False,128,64,64,38,26,13,51,0,89,0.59375,0.796875,0.6953125,0.6953125,0.785888671875,0.836455803934511
+af,s43-cabg_lce-step0024-development,43,cabg_lce,24,development,generated answer,False,128,64,64,38,26,10,54,0,92,0.59375,0.84375,0.71875,0.71875,0.744140625,0.776758878391137
+af,s43-cabg_lce-step0100-development,43,cabg_lce,100,development,generated answer,False,128,64,64,35,29,9,55,0,90,0.546875,0.859375,0.703125,0.703125,0.7861328125,0.820837517804909
+af,s43-cabg_lce-step0300-development,43,cabg_lce,300,development,generated answer,False,128,64,64,44,20,13,51,0,95,0.6875,0.796875,0.7421875,0.7421875,0.800048828125,0.831370267335629
+af,s43-cabg_lce-step1000-development,43,cabg_lce,1000,development,generated answer,False,128,64,64,45,19,16,48,0,93,0.703125,0.75,0.7265625,0.7265625,0.802734375,0.83956537359011
+af,s43-fixed_lce-step0024-development,43,fixed_lce,24,development,generated answer,False,128,64,64,37,27,12,52,0,89,0.578125,0.8125,0.6953125,0.6953125,0.722412109375,0.760745109583274
+af,s43-fixed_lce-step0100-development,43,fixed_lce,100,development,generated answer,False,128,64,64,38,26,15,49,0,87,0.59375,0.765625,0.6796875,0.6796875,0.797119140625,0.82329941436271
+af,s43-fixed_lce-step0300-development,43,fixed_lce,300,development,generated answer,False,128,64,64,40,24,19,45,0,85,0.625,0.703125,0.6640625,0.6640625,0.7568359375,0.771348006326484
+af,s43-fixed_lce-step1000-development,43,fixed_lce,1000,development,generated answer,False,128,64,64,45,19,16,48,0,93,0.703125,0.75,0.7265625,0.7265625,0.810302734375,0.844450265156231
+af,s43-lm_only-step0024-development,43,lm_only,24,development,generated answer,False,128,64,64,47,17,15,49,0,96,0.734375,0.765625,0.75,0.75,0.466796875,0.546983141581203
+af,s43-lm_only-step0100-development,43,lm_only,100,development,generated answer,False,128,64,64,7,57,2,62,0,69,0.109375,0.96875,0.5390625,0.5390625,0.364501953125,0.424674801162387
+af,s43-lm_only-step0300-development,43,lm_only,300,development,generated answer,False,128,64,64,54,10,19,45,0,99,0.84375,0.703125,0.7734375,0.7734375,0.64599609375,0.660838157370084
+af,s43-lm_only-step1000-development,43,lm_only,1000,development,generated answer,False,128,64,64,43,21,12,52,0,95,0.671875,0.8125,0.7421875,0.7421875,0.56787109375,0.542777842401497
+af,s44-cabg_lce-step0024-development,44,cabg_lce,24,development,generated answer,False,128,64,64,35,29,14,50,0,85,0.546875,0.78125,0.6640625,0.6640625,0.55419921875,0.580794405036789
+af,s44-cabg_lce-step0100-development,44,cabg_lce,100,development,generated answer,False,128,64,64,47,17,19,45,0,92,0.734375,0.703125,0.71875,0.71875,0.783203125,0.800034020725169
+af,s44-cabg_lce-step0300-development,44,cabg_lce,300,development,generated answer,False,128,64,64,49,15,18,46,0,95,0.765625,0.71875,0.7421875,0.7421875,0.794677734375,0.828928865510928
+af,s44-cabg_lce-step1000-development,44,cabg_lce,1000,development,generated answer,False,128,64,64,43,21,16,48,0,91,0.671875,0.75,0.7109375,0.7109375,0.806640625,0.840405751677314
+af,s44-fixed_lce-step0024-development,44,fixed_lce,24,development,generated answer,False,128,64,64,22,42,8,56,0,78,0.34375,0.875,0.609375,0.609375,0.603515625,0.606929246460309
+af,s44-fixed_lce-step0100-development,44,fixed_lce,100,development,generated answer,False,128,64,64,41,23,12,52,0,93,0.640625,0.8125,0.7265625,0.7265625,0.641357421875,0.617938777271557
+af,s44-fixed_lce-step0300-development,44,fixed_lce,300,development,generated answer,False,128,64,64,24,40,6,58,0,82,0.375,0.90625,0.640625,0.640625,0.716796875,0.667067288444633
+af,s44-fixed_lce-step1000-development,44,fixed_lce,1000,development,generated answer,False,128,64,64,42,22,17,47,0,89,0.65625,0.734375,0.6953125,0.6953125,0.798583984375,0.835532008318984
+af,s44-lm_only-step0024-development,44,lm_only,24,development,generated answer,False,128,64,64,8,56,0,64,0,72,0.125,1,0.5625,0.5625,0.328125,0.419135504986725
+af,s44-lm_only-step0100-development,44,lm_only,100,development,generated answer,False,128,64,64,55,9,22,42,0,97,0.859375,0.65625,0.7578125,0.7578125,0.35498046875,0.433384310725078
+af,s44-lm_only-step0300-development,44,lm_only,300,development,generated answer,False,128,64,64,36,28,14,50,0,86,0.5625,0.78125,0.671875,0.671875,0.377685546875,0.434242423183486
+af,s44-lm_only-step1000-development,44,lm_only,1000,development,generated answer,False,128,64,64,40,24,14,50,0,90,0.625,0.78125,0.703125,0.703125,0.4417724609375,0.467982455351029

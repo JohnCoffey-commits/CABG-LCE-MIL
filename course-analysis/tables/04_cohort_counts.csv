@@ -1,0 +1,7 @@
+split,class,label,n,split_total
+train,0,No listed finding,334,1000
+train,1,Listed finding,666,1000
+development,0,No listed finding,64,128
+development,1,Listed finding,64,128
+final,0,No listed finding,64,542
+final,1,Listed finding,478,542

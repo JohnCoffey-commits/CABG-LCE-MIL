@@ -1,40 +1,24 @@
 # Research source release
 
-This directory publishes the accepted, committed CABG-LCE-MIL project source from MEDIC-AD commit `cb5a33ca4d6d976d5f736f3f0a3217fdb5e47b2f`, relative to upstream base `ad62e7c910f4febad7b07030bd1c11796ae064e7`.
+Release `uts32933-report-20261026-v1` combines the previously published committed contribution with the report-era stage2af/ag/ah implementation. `PROJECT_SOURCE_HEAD` continues to record the historical committed baseline (cb5a33ca4d6d976d5f736f3f0a3217fdb5e47b2f); `SOURCE_RELEASE.json` records the additional source snapshot and the three connection-placeholder substitutions.
 
 ## Contents
 
-- `overlay/qwen-vl-finetune/` — data, trainer, argument and checkpoint integration changes.
-- `overlay/transformers/models/qwen2_5_vl/` — Qwen2.5-VL configuration and raw A/N attention integration changes.
-- `overlay/reproduction/` — committed experiment, training, analysis, test and independent-verification source from the project stages.
-- `patches/cabg-lce-mil-source.patch` — the same source contribution as an applyable Git patch.
-- `environment/` — the recorded Python dependency and package configuration snapshots.
-- `source-manifest.sha256` — SHA-256 identities for every exported overlay file.
-- `PROJECT_SOURCE_HEAD` and `UPSTREAM_BASE` — exact source identities.
+- `overlay/`: model integration, training, evaluation, diagnostics, numerical checks and their retained historical dependencies.
+- `patches/cabg-lce-mil-source.patch`: the same exported contribution as a patch against upstream `ad62e7c910f4febad7b07030bd1c11796ae064e7`.
+- `environment/`: historical dependency snapshots; the current reported environment is also specified in `report-configuration.json`.
+- `source-manifest.sha256`: identities of every exported overlay file.
+- `scripts/apply-overlay.sh`: installs the overlay on the pinned clean upstream checkout.
+- `scripts/verify_release.py`: checks the inventory and Python syntax without importing model code.
 
-The stage directories retain the actual evolution of the work:
+## Report-era stages
 
-- `stage2b`–`stage2e`: training feasibility, repeatability and baseline preparation;
-- `stage2f`–`stage2g`: FB-MAQ engineering and anomaly-specific pilot;
-- `stage2h`: LAD-MIL mechanism and calibration gates;
-- `stage2i`–`stage2j`: CABG-MIL diagnostics and v1.2 redesign;
-- `stage2k`–`stage2m`: D3R, pilot and full Scout execution;
-- `stage2n`–`stage2p`: stability repairs, shared-parent causal branch and fixed cutoff;
-- `stage2q`, `stage2s`–`stage2aa`: reproducibility, controller/LCE mechanism, baselines and timing studies;
-- `stage2ab`–`stage2ad`: capability-pipeline and independent-cohort readiness code.
+`stage2af` implements the 1,000-update ChestX-Det comparison, preprocessing, fixed LCE calibration, linear-head comparator and independent training/result checks. `driver_v2.py` selects `train.py` for accepted seed43 attempt-v1 and `train_v2.py` for accepted seed44 attempt-v2. Both versions are required; the difference concerns the frozen initialization reference and recorded engineering amendment.
 
-`stage2r` is deliberately absent. In the source-of-record repository it remains untracked preparation rather than accepted committed code, so it was not silently promoted into this release.
+`stage2ag` implements the local mapping, spatial-shuffle, token-swap and fixed prior-odds interventions. `stage2ah` implements spatial value transport, its matched aligned/shuffled training, evaluation and separate results verification. Earlier modules remain because these stages import the LCE, controller, runtime, deterministic execution and linear-classifier implementations from them. Stage2r and the separate historical stage2ae are outside this report release.
 
-## Deliberate exclusions
+## Running and inspecting
 
-This release contains source and small execution configuration files only. Binary tensor fixtures, dataset/member manifests, MRI images, checkpoints, model weights, optimizer/RNG state, raw traces, private source records and host-specific formal execution protocols are excluded. Consequently, the repository exposes the complete accepted implementation but cannot reproduce numerical results without the separately governed data, weights and immutable artifacts.
+Read [the report code map](../REPORT_CODE_MAP.md) before choosing an entry point. The original orchestration helpers are preserved for inspection and expect an established execution environment, original workspace layout and frozen protocol artifacts. They are not one-command launchers for an arbitrary computer. SSH target/socket placeholders must be configured for a separately authorized new execution. No deployment, training or inference is part of source reconstruction or inventory verification.
 
-## Integrity check
-
-From the repository root:
-
-```sh
-sha256sum -c research-code/source-manifest.sha256
-```
-
-On systems without `sha256sum`, use an equivalent SHA-256 checker. The patch and manifest are generated from the pinned Git identities above, not from a remote runtime directory.
+The scientific implementations are unchanged. Dataset images, prepared tensors, model/checkpoint bodies, private manifests and host-specific frozen protocols are not included. The public source and separately supplied analysis attachment serve different purposes: implementation inspection and CPU numerical recomputation respectively.
